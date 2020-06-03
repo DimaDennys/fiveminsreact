@@ -2,3 +2,11 @@
 install Express
     yarn global add express-generator@4.15.5
 
+install the actual webserver express using EJS as a view
+    express -v ejs -f musiclist
+
+Every time you load up a web page, you’re making a request to the server. req
+Response—which is always represented in Express as “res”—is what the webserver sends back after you make your request.
+
+
+
