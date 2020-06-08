@@ -3,13 +3,13 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-const indexRouter = require('./routes/index');
-//const usersRouter = require('./routes/users');
+const index = require('./routes/index');
+const api = require('./routes/api/index');
+const users = require('./routes/api/users');
 
 const app = express();
 mongoose.connect('mongodb://localhost/musiclist');
@@ -27,14 +27,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('express-session')({
   secret: 'any random string can go here',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', indexRouter);
-//app.use('/users', usersRouter);
+app.use('/', index);
+app.use('/api', api);
+app.use('/api/users', users);
+
 const User = require('./models/user');
+
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
