@@ -1,3 +1,6 @@
+git branch sub
+git checkout sub
+
 /home/dima/data/mongo/db
 install Express
     yarn global add express-generator@4.15.5
